@@ -1,0 +1,299 @@
+.container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.header {
+  height: 83rpx;
+  width: 100%;
+  border-bottom-style: solid;
+  border-bottom-color: #eee;
+  border-bottom-width: 1rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.header .edit {
+  display: flex;
+  margin-right: 15rpx;
+  margin-left: 15rpx;
+  margin-bottom: 15rpx;
+  margin-top: 15rpx;
+  flex-grow: 1;
+  border-radius: 5rpx;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header .edit:active {
+  background-color: #eee;
+}
+
+.header .edit image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 20rpx;
+  margin-right: 15rpx;
+}
+
+.header text {
+  padding: 5rpx 5rpx 5rpx 15rpx;
+  line-height: 55rpx;
+  overflow: hidden;
+  border-radius: 15rpx;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.content {
+  position: absolute;
+  top: 85rpx;
+  right: 0;
+  left: 0;
+  bottom: 100rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.category {
+  width: 177rpx;
+  overflow: hidden;
+}
+
+.category view {
+  text-align: center;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+}
+
+.category ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.good {
+  width: 573rpx;
+}
+
+.good .item {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  margin: 15rpx; 
+}
+
+.good .item .info {
+  margin-left: 15rpx;
+  width: 1rpx;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.good .item .image {
+  width: 219rpx;
+  height: 219rpx;
+  background:#fafafa;
+}
+
+.good .item .info .description {
+  margin-top: 15rpx;
+  margin-bottom: 15rpx;
+  flex-grow: 1;
+}
+
+.good .item .info .bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.good .item .info .bottom .amount_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.good .item .info .bottom .price {
+  flex-grow: 1;
+}
+
+.good .item .info .bottom .amount_container .change {
+  width: 41rpx;
+  height: 41rpx;
+}
+
+.good .item .info .bottom .amount_container .add {
+  padding-left: 15rpx;
+}
+
+.good .item .info .bottom .amount_container .reduce {
+  padding-right: 15rpx;
+}
+
+.good .item .info .bottom .amount_container .amount {
+  min-width: 50rpx;
+  text-align: center;
+}
+
+.shop_car {
+  height: 100rpx;
+  border-top-style: solid;
+  border-top-width: 1rpx;
+  border-top-color: #eee;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 30rpx;
+}
+
+.shop_car .point {
+  align-self: flex-start;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  border-radius: 81rpx;
+  color: #fff;
+  background: #f36c60;
+  margin-top: 10rpx;
+  margin-left: -20rpx;
+}
+
+.shop_car .price {
+  flex-grow: 1;
+  padding-left: 30rpx;
+}
+
+.shop_car .shop_car_image {
+  height: 70rpx;
+  width: 70rpx;
+  align-items: flex-end;
+}
+
+.shop_car .pay {
+  background-color: #ffa726;
+  padding-left: 60rpx;
+  padding-right: 60rpx;
+  height: 100rpx;
+  display: flex;
+  color: #fff;
+  align-items: center;
+}
+
+.shop_car .pay:active {
+  background-color: #ff9800;
+}
+
+.shop_car image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.shop_list {
+  position: absolute;
+  bottom: 100rpx;
+  top: 0rpx;
+  left: 0rpx;
+  right: 0rpx;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.shop_list_header {
+  padding: 15rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.shop_list_header image {
+  height: 35rpx;
+  width: 35rpx;
+  margin-right: 15rpx;
+}
+
+.shop_list_header .garbage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.shop_list scroll-view {
+  max-height: 500rpx;
+}
+
+.shop_list_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15rpx;
+}
+
+.shop_list_item .name {
+  width: 350rpx;
+}
+
+.shop_list_item .price {
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  width: 200rpx;
+}
+
+.shop_list_item .change {
+  width: 41rpx;
+  padding: 15rpx;
+  height: 41rpx;
+}
+
+.shop_list_item .reduce {
+  width: 41rpx;
+  padding-left: 20rpx;
+  height: 41rpx;
+}
+
+.shop_list_item .reduce {
+  width: 41rpx;
+  padding-right: 20rpx;
+  height: 41rpx;
+}
+
+.poster_container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: #00000066;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.poster_container image {
+  width: 640rpx;
+  border-radius: 15rpx;
+  margin-bottom: 60rpx;
+}
+
+.poster_container .close {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: -30rpx;
+  z-index: 100;
+  padding-right: 30rpx;
+  padding-left: 30rpx;
+  align-self: flex-end;
+}

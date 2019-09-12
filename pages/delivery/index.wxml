@@ -1,0 +1,92 @@
+<!--index.wxml-->
+<view>
+  <view wx:if="{{state == 'show'}}" class="container bg_white">
+    <view class="header">
+      <view bindtap='search' class='edit bg_grey'>
+        <image src='/image/delivery/search.png'></image>
+        <text class="globle_text_2 text_color_grey">搜索</text>
+      </view>
+    </view>
+
+    <view class="content" style="bottom: {{shopcarVisibility == 'show'?'100rpx':'0rpx'}}">
+      <scroll-view class="category bg_grey" scroll-y="true">
+        <view bindtap='typeCLick' wx:key="{{item.id}}" data-id='{{item.id}}' class="globle_text_2 {{item.active == 'true'?'bg_white text_color_orange':'text_color_grey'}}" wx:for="{{dataList}}">
+          {{item.name}}
+        </view>
+      </scroll-view>
+      <scroll-view class="good" id="goodList" scroll-y="true" scroll-top="{{scrollValue}}">
+        <view wx:for="{{currentType.goodList}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='toDetail'>
+          <view class="item">
+            <image class="image" src="{{imageHost}}{{item.imageUrl}}"></image>
+            <view class="info">
+              <text class="name globle_text_3">{{item.name}}</text>
+              <text class="description globle_text_1 text_color_grey">{{item.description}}</text>
+              <view class="bottom">
+                <text class="price globle_text_2 text_color_red">¥{{item.price}}</text>
+                <view class="amount_container">
+                  <image catchtap='reduceClick' data-id='{{item.id}}' class="change reduce" src="/image/delivery/reduce.png"></image>
+                  <view class="amount globle_text_2 text_color_orange">{{item.amount == null?0:item.amount}}</view>
+                  <image catchtap='addClick' data-id='{{item.id}}' class="change add" src="/image/delivery/add.png"></image>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="line"></view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view wx:if="{{shopcarVisibility=='show'}}" catchtap='showShoplist' class="shop_car">
+      <image class='shop_car_image' src="/image/delivery/shopcar.png"></image>
+      <view class='point globle_text_1'>{{goodAmount}}</view>
+      <view class="price">
+        <view class='globle_text_4 text_color_red'>
+          {{priceAmount}}
+        </view>
+        <view class='globle_text_1 text_color_grey'>
+          不含运费
+        </view>
+      </view>
+      <view catchtap='comfirm' class="pay globle_text_3">去结算</view>
+    </view>
+
+    <view wx:if="{{shoplistVisibility=='show'}}" catchtap='hideShoplist' class='shop_list bg_floating'>
+      <view catchtap="showShoplist" class="shop_list_content bg_white">
+        <view class="shop_list_header bg_grey">
+          <text class="globle_text_3">已选商品</text>
+
+          <view catchtap='clearShopList' class="garbage">
+            <image src="/image/delivery/garbage.png"></image>
+            <text class="globle_text_3 text_color_grey">清空</text>
+          </view>
+        </view>
+        <scroll-view scroll-y="true">
+          <view wx:for="{{shopList}}" wx:key="{{item.body.id}}">
+            <view class="shop_list_item">
+              <text class="name globle_text_3">{{item.body.name}}</text>
+              <text class="price text_color_orange globle_text_3">￥{{item.body.price}}</text>
+              <image catchtap='reduceClick' data-id='{{item.body.id}}' class="change reduce" src="/image/delivery/reduce.png"></image>
+              <view class="amount globle_text_2 text_color_orange">{{item.amount}}</view>
+              <image catchtap='addClick' data-id='{{item.body.id}}' class="change add" src="/image/delivery/add.png"></image>
+            </view>
+            <view class='line'></view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+
+  </view>
+  <view wx:elif="{{state == 'load'}}" class="lv_container">
+    <view class="lv_point lv_point1"></view>
+    <view class="lv_point lv_point2"></view>
+    <view class="lv_point lv_point3"></view>
+  </view>
+  <view wx:elif="{{state == 'error'}}" class="ev_container">
+    <text>{{errorMsg}}</text>
+    <view bindtap='getData' class="button text_color_orange globle_text_2">点击重试</view>
+  </view>
+  <view wx:if="{{postImageUrl}}" catchtap='posterClose' class="poster_container">
+    <image src='{{postImageUrl}}' mode='widthFix'></image>
+    <image src="/image/delivery/close.png" catchtap="posterClose" class="close"></image>
+  </view>
+</view>

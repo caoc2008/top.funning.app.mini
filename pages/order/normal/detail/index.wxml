@@ -1,0 +1,89 @@
+<!-- pages/order/normal/detail/ -->
+<view>
+  <scroll-view wx:if="{{state == 'show'}}" scroll-y="true">
+    <view class="header" style='background-color:{{titleColor}}'>
+      <image src="{{titleImage}}"></image>
+      <text class="globle_text_5">{{info.stateStr}}</text>
+    </view>
+
+    <view wx:if="{{info.telNumber}}" class="address hide bg_white">
+      <view class="name phone globle_text_3">{{info.userName}} {{info.telNumber}}</view>
+      <view class="detail globle_text_2 text_color_grey">{{info.provinceName}} {{info.cityName}} {{info.countyName}} {{info.detailInfo}}</view>
+    </view>
+
+    <view wx:if="{{info.telNumber}}" style='display:flex;height:5rpx'>
+      <view style="display:flex;width:60rpx;align-item:stretch" wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12,13]}}">
+        <view style="background:{{item%2==1?'#afcdfa':'#f3b0b2'}};width:35rpx;align-item:stretch"></view>
+        <view style="background:#ffffff;width:25rpx;align-item:stretch"></view>
+      </view>
+    </view>
+
+    <view class="title bg_white">
+      <text class="globle_text_3">商品列表</text>
+      <text class="globle_text_3">商品总数: <text class="text_color_orange">x{{info.goodAmount}}</text></text>
+    </view>
+    <view class="goods bg_white">
+      <view class="item" wx:for="{{info.goodList}}" wx:key="{{item.id}}">
+        <image src="{{imageHost}}{{item.body.imageUrl}}"></image>
+        <view class="info">
+          <text class="name globle_text_3">{{item.body.name}}</text>
+          <text class="description globle_text_1 text_color_grey">{{item.body.description}}</text>
+          <view class="size">
+            <text class="text_color_grey globle_text_2">数量: <text class='text_color_orange'> x{{item.amount}}</text></text>
+            <text class="globle_text_2 text_color_red">¥{{item.body.price}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{info.note}}" class="note bg_white">
+      <text class='globle_text_3'>留言备注</text>
+      <text class='globle_text_3'>{{info.note}}</text>
+    </view>
+    <view class="orderId bg_white">
+      <view>
+        <text class="globle_text_3">订单ID</text>
+        <text class="globle_text_1 button" bindtap='copyText' data-text="{{info.id}}">点击复制</text>
+      </view>
+      <text class="globle_text_3 text_color_orange">{{info.id}}</text>
+    </view>
+    <view class="common_item bg_white">
+      <text class="globle_text_3">下单时间</text>
+      <text class="globle_text_3 text_color_orange">{{info.createDT}}</text>
+    </view>
+    <view wx:if="{{info.payDT}}" class="common_item bg_white">
+      <text class="globle_text_3">付款时间</text>
+      <text class="globle_text_3 text_color_orange">{{info.payDT}}</text>
+    </view>
+    <view class="common_item bg_white">
+      <text class="globle_text_3">商品金额</text>
+      <text class="globle_text_3 text_color_orange">¥{{info.price}}</text>
+    </view>
+    <view wx:if="{{info.poster}}" class="common_item bg_white">
+      <text class="globle_text_3">运费</text>
+      <text class="globle_text_3 text_color_orange">¥{{info.poster}}</text>
+    </view>
+    <view class="common_item bg_white">
+      <text class="globle_text_3">总价</text>
+      <text class="globle_text_5 text_color_red">¥{{info.priceAmount?info.priceAmount:info.price}}</text>
+    </view>
+
+    <view class="footer">
+      <view wx:if="{{info.state == 1}}" bindtap='pay' class="button globle_text_2 orange">付款</view>
+      <view wx:if="{{info.state == 1}}" bindtap="cancel" class="button globle_text_2">取消订单</view>
+      <view wx:if="{{info.state == 2}}" bindtap="refund" class="button globle_text_2">申请退款</view>
+      <view bindtap='makePhoneCall' class="button globle_text_2">联系店家</view>
+    </view>
+
+  </scroll-view>
+
+  <view wx:elif="{{state == 'load'}}" class="lv_container">
+    <view class="lv_point lv_point1"></view>
+    <view class="lv_point lv_point2"></view>
+    <view class="lv_point lv_point3"></view>
+  </view>
+  <view wx:elif="{{state == 'error'}}" class="ev_container">
+    <text>{{errorMsg}}</text>
+    <view bindtap='getData' class="button text_color_orange globle_text_2">点击重试</view>
+  </view>
+</view>

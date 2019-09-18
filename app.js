@@ -2,9 +2,9 @@
 
 App({
   imageHost: "http://image.app.funning.top/",
-  appName: "噼里啪啦小铺",
+  appName: "饭宁杂货铺",
   phoneNum: "18620552310",
-  shopId:6,
+  shopId:8,
   isLogin: false,
   shopList: [],
   cookie: {},

@@ -3,7 +3,6 @@
 ## 使用说明
 
 1. 配置 common/web.js -> host
-1. 配置 app.json -> imageHost
 1. 修改 app.json -> window.navigationBarTitleText
 1. 修改 app.js -> appName
 1. 修改 app.js -> shopId（店铺编号）

@@ -1,4 +1,6 @@
 <!--index.wxml-->
+
+<wxs src="../shop_car.wxs" module="tools" />
 <view>
   <view wx:if="{{state == 'show'}}" class="container bg_white">
     <view class="header">
@@ -10,7 +12,7 @@
 
     <view class="content" style="bottom: {{shopcarVisibility == 'show'?'100rpx':'0rpx'}}">
       <scroll-view class="category bg_grey" scroll-y="true">
-        <view bindtap='typeCLick' wx:key="{{item.id}}" data-id='{{item.id}}' class="globle_text_2 {{item.active == 'true'?'bg_white text_color_orange':'text_color_grey'}}" wx:for="{{dataList}}">
+        <view bindtap='typeCLick' wx:key="{{item.id}}" data-item='{{item}}' class="globle_text_2 {{item.id == currentType.id?'bg_white text_color_orange':'text_color_grey'}}" wx:for="{{dataList}}">
           {{item.name}}
         </view>
       </scroll-view>
@@ -24,9 +26,9 @@
               <view class="bottom">
                 <text class="price globle_text_2 text_color_red">¥{{item.price}}</text>
                 <view class="amount_container">
-                  <image catchtap='reduceClick' data-id='{{item.id}}' class="change reduce" src="/image/delivery/reduce.png"></image>
-                  <view class="amount globle_text_2 text_color_orange">{{item.amount == null?0:item.amount}}</view>
-                  <image catchtap='addClick' data-id='{{item.id}}' class="change add" src="/image/delivery/add.png"></image>
+                  <image catchtap='reduceClick' data-item='{{item}}' class="change reduce" src="/image/delivery/reduce.png"></image>
+                  <view class="amount globle_text_2 text_color_orange">{{tools.getSingleGoodCount(shopCar,item.id)}}</view>
+                  <image catchtap='addClick' data-item='{{item}}' class="change add" src="/image/delivery/add.png"></image>
                 </view>
               </view>
             </view>
@@ -36,12 +38,12 @@
       </scroll-view>
     </view>
 
-    <view wx:if="{{shopcarVisibility=='show'}}" catchtap='showShoplist' class="shop_car">
+    <view wx:if="{{shopCar.goodCount > 0}}" catchtap='showShoplist' class="shop_car">
       <image class='shop_car_image' src="/image/delivery/shopcar.png"></image>
-      <view class='point globle_text_1'>{{goodAmount}}</view>
+      <view class='point globle_text_1'>{{tools.getGoodCount(shopCar)}}</view>
       <view class="price">
         <view class='globle_text_4 text_color_red'>
-          {{priceAmount}}
+          {{tools.getMoneyCount(shopCar)}}
         </view>
         <view class='globle_text_1 text_color_grey'>
           不含运费
@@ -50,7 +52,7 @@
       <view catchtap='comfirm' class="pay globle_text_3">去结算</view>
     </view>
 
-    <view wx:if="{{shoplistVisibility=='show'}}" catchtap='hideShoplist' class='shop_list bg_floating'>
+    <view wx:if="{{shoplistVisibility=='show' && shopCar.goodCount > 0}}" catchtap='hideShoplist' class='shop_list bg_floating'>
       <view catchtap="showShoplist" class="shop_list_content bg_white">
         <view class="shop_list_header bg_grey">
           <text class="globle_text_3">已选商品</text>
@@ -61,13 +63,13 @@
           </view>
         </view>
         <scroll-view scroll-y="true">
-          <view wx:for="{{shopList}}" wx:key="{{item.body.id}}">
+          <view wx:for="{{shopCar.shopList}}" wx:key="{{item.id}}">
             <view class="shop_list_item">
-              <text class="name globle_text_3">{{item.body.name}}</text>
-              <text class="price text_color_orange globle_text_3">￥{{item.body.price}}</text>
-              <image catchtap='reduceClick' data-id='{{item.body.id}}' class="change reduce" src="/image/delivery/reduce.png"></image>
-              <view class="amount globle_text_2 text_color_orange">{{item.amount}}</view>
-              <image catchtap='addClick' data-id='{{item.body.id}}' class="change add" src="/image/delivery/add.png"></image>
+              <text class="name globle_text_3">{{item.name}}</text>
+              <text class="price text_color_orange globle_text_3">￥{{item.price}}</text>
+              <image catchtap='reduceClick' data-item='{{item}}' class="change reduce" src="/image/delivery/reduce.png"></image>
+              <view class="amount globle_text_2 text_color_orange">{{item.count}}</view>
+              <image catchtap='addClick' data-item='{{item}}' class="change add" src="/image/delivery/add.png"></image>
             </view>
             <view class='line'></view>
           </view>

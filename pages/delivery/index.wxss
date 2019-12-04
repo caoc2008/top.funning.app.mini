@@ -146,6 +146,7 @@
 }
 
 .shop_car {
+  background: #ffffff;
   height: 100rpx;
   border-top-style: solid;
   border-top-width: 1rpx;

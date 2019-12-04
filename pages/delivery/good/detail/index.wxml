@@ -1,4 +1,7 @@
 <!--pages/delivery/good/detail/index.wxml-->
+
+
+<wxs src="../../../shop_car.wxs" module="tools" />
 <view>
   <view wx:if="{{state == 'show'}}">
     <scroll-view class="content" scroll-Y="true">
@@ -16,7 +19,7 @@
         <view class="price globle_text_4 text_color_red">¥{{price}}</view>
         <view class="amount_container">
           <image catchtap='goodReduce' class="change reduce" src="/image/delivery/reduce.png"></image>
-          <view class="amount globle_text_3 text_color_orange">{{amount}}</view>
+          <view class="amount globle_text_3 text_color_orange">{{tools.getSingleGoodCount(shopCar,id)}}</view>
           <image catchtap='goodAdd' class="change add" src="/image/delivery/add.png"></image>
         </view>
       </view>
@@ -32,12 +35,12 @@
       <view wx:if="{{goodAmount>0}}" style="height:100rpx;"></view>
     </scroll-view>
 
-    <view wx:if="{{goodAmount>0}}" catchtap='showShoplist' class="shop_car">
+    <view wx:if="{{shopCar.goodCount > 0}}" catchtap='showShoplist' class="shop_car">
       <image class='shop_car_image' src="/image/delivery/shopcar.png"></image>
-      <view class='point globle_text_1'>{{goodAmount}}</view>
+      <view class='point globle_text_1'>{{shopCar.goodCount}}</view>
       <view class="price">
         <view class='globle_text_4 text_color_red'>
-          {{priceAmount}}
+          {{tools.getMoneyCount(shopCar)}}
         </view>
         <view class='globle_text_1 text_color_grey'>
           不含运费
@@ -46,7 +49,7 @@
       <view catchtap='comfirm' class="pay globle_text_3">去结算</view>
     </view>
 
-    <view wx:if="{{shoplistVisibility}}" catchtap='hideShoplist' class='shop_list bg_floating'>
+    <view wx:if="{{shoplistVisibility && shopCar.goodCount > 0}}" catchtap='hideShoplist' class='shop_list bg_floating'>
       <view catchtap="showShoplist" class="shop_list_content bg_white">
 
         <view class="shop_list_header bg_grey">
@@ -58,13 +61,13 @@
           </view>
         </view>
         <scroll-view scroll-y="true">
-          <view wx:for="{{shopList}}" wx:key="{{item.body.id}}">
+          <view wx:for="{{shopCar.shopList}}" wx:key="{{item.id}}">
             <view class="shop_list_item">
-              <text class="name globle_text_3">{{item.body.name}}</text>
-              <text class="price text_color_orange globle_text_3">￥{{item.body.price}}</text>
-              <image catchtap='shopListReduce' data-id='{{item.body.id}}' class="change reduce" src="/image/delivery/reduce.png"></image>
-              <view class="amount globle_text_2 text_color_orange">{{item.amount}}</view>
-              <image catchtap='shopListAdd' data-id='{{item.body.id}}' class="change add" src="/image/delivery/add.png"></image>
+              <text class="name globle_text_3">{{item.name}}</text>
+              <text class="price text_color_orange globle_text_3">￥{{item.price}}</text>
+              <image catchtap='reduceClick' data-item='{{item}}' class="change reduce" src="/image/delivery/reduce.png"></image>
+              <view class="amount globle_text_2 text_color_orange">{{item.count}}</view>
+              <image catchtap='addClick' data-item='{{item}}' class="change add" src="/image/delivery/add.png"></image>
             </view>
           </view>
         </scroll-view>

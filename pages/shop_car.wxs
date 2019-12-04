@@ -1,0 +1,24 @@
+function getSingleGoodCount(shopCar,id) { 
+  var shopList = shopCar.shopList;
+  var good = shopList[id];
+  console.log(good);
+  if (good == null) {
+    return 0;
+  } else {
+    return good.count;
+  }
+}
+
+function getGoodCount(shopCar) {
+  return shopCar.goodCount;
+}
+
+function getMoneyCount(shopCar) { 
+  return Number(shopCar.moneyCount).toFixed(2);
+}
+
+module.exports = {
+  getSingleGoodCount: getSingleGoodCount, 
+  getGoodCount: getGoodCount,
+  getMoneyCount: getMoneyCount
+}

@@ -2,13 +2,16 @@
 
 const web = require("../../../../common/web.js")
 const app = getApp();
+
+const shopCarUtils = require("../../../shop_car.js");
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
+
   },
 
   /**
@@ -29,7 +32,6 @@ Page({
       "amount": amount
     });
     this.getData();
-    this.updateBottomView();
   },
   getData: function() {
     let that = this;
@@ -41,6 +43,7 @@ Page({
     }, {
       success: function(d) {
         d.state = "show";
+        d.shopCar = app.shopCar;
         that.setData(d);
       },
       fail: function(code, msg) {
@@ -52,105 +55,74 @@ Page({
     });
   },
   goodAdd: function() {
-    let amount = this.data.amount;
-    if (!amount) {
-      amount = 0;
-    }
-    amount = amount + 1;
-    this.setData({
-      amount: amount
+    let that = this;
+    shopCarUtils.add({
+      "id": that.data.id,
+      "name": that.data.name,
+      "price": that.data.price
     });
 
-    this.updateShopList(amount);
-    this.updateBottomView();
-  },
-
-  goodReduce: function() {
-    let amount = this.data.amount;
-    if (!amount) {
-      amount = 0;
-    }
-    if (amount < 1) {
-      return;
-    }
-    amount = amount - 1;
     this.setData({
-      amount: amount
-    });
-
-    this.updateShopList(amount);
-    this.updateBottomView();
-  },
-  updateShopList: function(amount) {
-    let shopList = app.shopList;
-    let id = this.data.id;
-    let item;
-    for (let i = 0; i < shopList.length; i++) {
-      item = shopList[i];
-      if (item.body.id == id) {
-        item.amount = amount;
-      }
-    }
-    if (item == null) {
-      item = {};
-      item.amount = 1;
-      item.body = {};
-      item.body.id = this.data.id;
-      item.body.name = this.data.name;
-      item.body.description = this.data.description;
-      item.body.imageUrl = this.data.imageUrl;
-      item.body.price = this.data.price;
-      shopList.push(item);
-    } else if (item.amount == 0) {
-      let index = shopList.indexOf(item);
-      shopList.splice(index, 1);
-    }
-    app.shopList = shopList;
-  },
-  updateBottomView: function() {
-    let shopList = app.shopList;
-    let goodAmount = 0;
-    let priceAmount = 0;
-
-    for (let i = 0; i < shopList.length; i++) {
-      let item = shopList[i];
-      goodAmount = goodAmount + item.amount;
-      priceAmount = priceAmount + Number(item.body.price) * Number(item.amount);
-    }
-
-    this.setData({
-      goodAmount: goodAmount,
-      priceAmount: priceAmount
+      "shopCar": app.shopCar
     });
   },
 
-  showShoplist: function() {
-    console.log("showShoplist");
+  goodReduce: function () {
+    let that = this;
+    shopCarUtils.reduce(that.data.id);
+
     this.setData({
-      "shoplistVisibility": true,
-      "shopList": app.shopList
+      "shopCar": app.shopCar
+    });
+  },
+  
+  addClick: function (res) {
+    let item = res.target.dataset.item;
+    shopCarUtils.add({
+      "id": item.id,
+      "name": item.name,
+      "price": item.price
+    });
+
+    this.setData({
+      "shopCar": app.shopCar
     });
   },
 
-  hideShoplist: function() {
-    console.log("hideShoplist");
+  reduceClick: function (res) {
+    let item = res.target.dataset.item;
+    shopCarUtils.reduce(item.id);
+
+    this.setData({
+      "shopCar": app.shopCar
+    });
+  },
+
+  showShoplist: function() { 
+    this.setData({
+      "shoplistVisibility": true, 
+    });
+  },
+
+  hideShoplist: function() { 
     this.setData({
       "shoplistVisibility": false,
     });
   },
 
   clearShopList: function() {
-    app.shopList = [];
-    this.updateBottomView();
+    shopCarUtils.clear();
+
     this.setData({
-      "shoplistVisibility": false,
-      "amount": 0
+      "shopCar": app.shopCar,
+      "shoplistVisibility": false
     });
   },
 
   comfirm: function() {
-    let shopList = app.shopList;
-    if (!shopList) {
+    let that = this;
+    let shopCar = app.shopCar;
+    if (shopCar.goodCount < 1) {
       wx.showToast({
         image: "/image/failure.png",
         title: '请选择商品',
@@ -158,14 +130,25 @@ Page({
       return;
     }
 
+    let data = [];
+    let shopList = shopCar.shopList;
+    for (let id in shopList) {
+      let good = shopList[id];
+      data.push({
+        id: good.id,
+        amount: good.count
+      });
+    }
+
     wx.showLoading({
       title: '处理中...',
     })
     web.request("C1002", {
-      goodList: shopList
+      goodList: data
     }, {
       success: function(data) {
         console.log(data);
+        that.clearShopList();
         wx.hideLoading();
         wx.navigateTo({
           url: '/pages/order/normal/confirm/index?id=' + data.id,

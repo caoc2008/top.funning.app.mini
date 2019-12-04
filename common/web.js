@@ -4,7 +4,7 @@
  */
 
 function request(cmd, data, operation) {
-  data.shopId = getApp().shopId;
+  let shopId = getApp().shopId;
   console.log("web request " + cmd + " data", data);
   let app = getApp();
   let cookie = "";
@@ -20,6 +20,7 @@ function request(cmd, data, operation) {
     data: {
       "cmd": cmd,
       "data": data,
+      "shopId": shopId
     },
     header: {
       "Cookie": cookie

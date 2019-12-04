@@ -44,14 +44,15 @@
 .content .operation .amount_container .change {
   width: 41rpx;
   height: 41rpx;
+  background: #ffffff;
 }
 
 .content .operation .amount_container .add {
-  padding-left: 30rpx;
+  margin-left: 30rpx;
 }
 
 .content .operation .amount_container .reduce {
-  padding-right: 30rpx;
+  margin-right: 30rpx;
 }
 
 .content .title {

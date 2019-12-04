@@ -10,7 +10,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    "imageHost": app.imageHost,
     "state": "load", //error,load,show
     "id": "",
     "goodList": [],

@@ -9,8 +9,7 @@ Page({
    */
   data: {
     "state": "show",
-    "orders": [],
-    "imageHost":app.imageHost
+    "orders": []
   },
 
   /**

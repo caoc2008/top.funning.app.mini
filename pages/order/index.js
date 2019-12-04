@@ -9,8 +9,7 @@ Page({
    */
   data: {
     "listMode": "1",
-    "orders": {},
-    "imageHost": app.imageHost
+    "orders": {}
   },
 
   /**

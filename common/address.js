@@ -8,7 +8,7 @@ const web = require("web.js");
 function computer(parameter) {
   let tem = parameter.address;
   let address = tem.provinceName + tem.provinceName + tem.cityName + tem.detailInfo
-  web.request("C1034", {
+  web.request("C1013", {
     countryName: "中国",
     provinceName: tem.provinceName,
     cityName: tem.cityName,
@@ -22,7 +22,6 @@ function computer(parameter) {
     }
   });
 }
-
 
 module.exports = {
   computer: computer,
